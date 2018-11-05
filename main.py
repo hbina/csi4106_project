@@ -3,7 +3,6 @@ import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 from keras.models import Sequential
 from keras.layers import Dense
 from keras import backend as K
-
 from subprocess import check_output
 
 print(check_output(["ls", "."]).decode("utf8"))
@@ -104,8 +103,18 @@ test_x_as_nparray = np.array(test_x_as_list)
 
 model = Sequential()
 K.set_image_dim_ordering('th')
-model.add(Dense(12, input_dim=9, kernel_initializer='uniform', activation='relu'))
-model.add(Dense(8, kernel_initializer='uniform', activation='relu'))
+model.add(Dense(4096, input_dim=9, kernel_initializer='uniform', activation='sigmoid'))
+model.add(Dense(2048, kernel_initializer='uniform', activation='sigmoid'))
+model.add(Dense(1024, kernel_initializer='uniform', activation='sigmoid'))
+model.add(Dense(512, kernel_initializer='uniform', activation='sigmoid'))
+model.add(Dense(256, kernel_initializer='uniform', activation='sigmoid'))
+model.add(Dense(128, kernel_initializer='uniform', activation='sigmoid'))
+model.add(Dense(64, kernel_initializer='uniform', activation='sigmoid'))
+model.add(Dense(32, kernel_initializer='uniform', activation='sigmoid'))
+model.add(Dense(16, kernel_initializer='uniform', activation='sigmoid'))
+model.add(Dense(8, kernel_initializer='uniform', activation='sigmoid'))
+model.add(Dense(4, kernel_initializer='uniform', activation='sigmoid'))
+model.add(Dense(2, kernel_initializer='uniform', activation='sigmoid'))
 model.add(Dense(1, kernel_initializer='uniform', activation='sigmoid'))
 model.summary()
 # Compile model
@@ -113,4 +122,5 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 model.fit(train_x_as_nparray, train_y_as_nparray,
           epochs=20)
 model_prediction = model.predict(test_x_as_nparray, batch_size=None, verbose=0, steps=None)
+print("dataset:", test_x_as_nparray)
 print("model_prediction:", model_prediction)
