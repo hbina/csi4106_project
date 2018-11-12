@@ -1,14 +1,48 @@
-import numpy as np  # linear algebra
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
-from keras.models import Sequential
 from keras.layers import Dense
-from subprocess import check_output
+from keras.models import Sequential
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.impute import SimpleImputer
+import numpy as np
 
-print(check_output(["ls", "."]).decode("utf8"))
+print("opening dataset file....")
+X = pd.read_csv('../dataset/train.csv')
+print("obtaining the annotated result...")
+Y = X.pop('Survived').values
+print("splitting dataset into training and test")
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.25)
 
-original_train_data = pd.read_csv("../train.csv").values
-original_test_data = pd.read_csv("../test.csv").values
+print("shape of X", X_train.shape)
+print("shape of Y", y_test.shape)
 
+print("performing one hot encoding on the input X")
+one_hot_encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
+feature_set = ['Pclass', 'Age', 'SibSp', 'Parch', 'Fare']
+
+print("filtering out irrelevant features...")
+X_train_sf = X_train[feature_set].copy()
+X_test_sf = X_test[feature_set].copy()
+
+# Imputer...replaces NaN object with the mean...
+# Obtained from https://stackoverflow.com/a/30319249
+# Create our imputer to replace missing values with the mean e.g.
+print("using Imputer to convert unknown values to mean")
+imp = SimpleImputer(missing_values=np.nan, strategy='mean')
+imp = imp.fit(X_train_sf)
+# Impute our data, then train
+X_train_imp = imp.transform(X_train_sf)
+print("imputed training set")
+print(X_train_imp)
+
+one_hot_encoder.fit(X_train_imp)
+
+feature_names = one_hot_encoder.get_feature_names()
+print("the following are the features that have been encoded")
+print(feature_names)
+
+X_train_sf_encoded = one_hot_encoder.transform(X_train_imp)
+X_test_sf_encoded = one_hot_encoder.transform(X_test_sf)
 
 model = Sequential()
 model.add(Dense(9, input_dim=9, kernel_initializer='uniform', activation='sigmoid'))
@@ -20,8 +54,5 @@ model.add(Dense(1, kernel_initializer='uniform', activation='relu'))
 model.summary()
 # Compile model
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-model.fit(train_x_as_nparray, train_y_as_nparray,
+model.fit(X_train_sf_encoded, y_train,
           epochs=20)
-model_prediction = model.predict(test_x_as_nparray, batch_size=400, verbose=0, steps=None)
-print("dataset:", test_x_as_nparray)
-print("model_prediction:", model_prediction)
