@@ -32,24 +32,22 @@ imp = imp.fit(X_filtered)
 
 X_train_imp = imp.transform(X_filtered)
 X_joined = np.concatenate([X_train_imp, X_train_sf_encoded], axis=1)
-
-print(X_joined.shape)
 seed = 7
 k_fold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
 cv_scores = []
 for train, test in k_fold.split(X_joined, Y):
     # create model
     model = Sequential()
-    model.add(Dense(9, input_dim=14, kernel_initializer='uniform', activation='sigmoid'))
-    model.add(Dense(18, kernel_initializer='uniform', activation='relu'))
-    model.add(Dense(36, kernel_initializer='uniform', activation='relu'))
-    model.add(Dense(18, kernel_initializer='uniform', activation='relu'))
-    model.add(Dense(9, kernel_initializer='uniform', activation='relu'))
-    model.add(Dense(1, kernel_initializer='uniform', activation='relu'))
+    model.add(Dense(9, input_dim=14, activation='relu'))
+    model.add(Dense(18, activation='relu'))
+    model.add(Dense(36, activation='relu'))
+    model.add(Dense(18, activation='relu'))
+    model.add(Dense(9, activation='relu'))
+    model.add(Dense(1, activation='relu'))
     # Compile model
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     # Fit the model
-    model.fit(X_joined[train], Y[train], epochs=150, batch_size=10, verbose=0)
+    model.fit(X_joined[train], Y[train], epochs=100, verbose=0)
     # evaluate the model
     scores = model.evaluate(X_joined[test], Y[test], verbose=0)
     print("%s: %.2f%%" % (model.metrics_names[1], scores[1] * 100))
