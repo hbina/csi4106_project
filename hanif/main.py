@@ -38,11 +38,9 @@ cv_scores = []
 for train, test in k_fold.split(X_joined, Y):
     # create model
     model = Sequential()
-    model.add(Dense(9, input_dim=14, activation='relu'))
-    model.add(Dense(18, activation='relu'))
-    model.add(Dense(36, activation='relu'))
-    model.add(Dense(18, activation='relu'))
-    model.add(Dense(9, activation='relu'))
+    model.add(Dense(14, input_dim=14, activation='relu'))
+    model.add(Dense(7, activation='relu'))
+    model.add(Dense(3, activation='relu'))
     model.add(Dense(1, activation='relu'))
     # Compile model
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
