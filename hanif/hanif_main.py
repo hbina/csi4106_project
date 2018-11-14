@@ -18,7 +18,6 @@ def preprocess(input_X):
     X_train_sf = input_X[feature_set].copy()
     one_hot_encoder.fit(X_train_sf)
 
-    feature_names = one_hot_encoder.get_feature_names()
     X_train_sf_encoded = one_hot_encoder.transform(X_train_sf)
     X_filtered = input_X[['Fare', 'Age']]
 
@@ -42,6 +41,7 @@ X_train_preprocessed = preprocess(X_train)
 X_test_preprocessed = preprocess(pd.read_csv('../test.csv'))
 X_test_preprocessed = np.delete(X_test_preprocessed, 12, 1)
 seed = 7
+
 k_fold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
 cv_scores = []
 for train, test in k_fold.split(X_train_preprocessed, Y_train):

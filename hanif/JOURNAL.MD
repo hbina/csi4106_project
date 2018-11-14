@@ -12,3 +12,17 @@ Considering how simple the dataset, relatively speaking, current neuron densitie
 The prediction function is probably too complex, and thus over-fitting the dataset (reference: Introduction to Statistical Learning, earlier chapters).
 
 Next thing to do is to reduce the neuron densities...and consider some other form of networks...
+
+# 14th November 2018
+
+Now only have 1 layer.
+We think that we overestimated the complexity of the dataset.
+A single dataset is apparently enough to capture the dataset without overfitting during testing.
+Thanks to Nick Broadbent for mentioning this.
+
+There is also a problem with the given test dataset during the encoding process.
+This is caused by the fact that the training dataset does not have all the possible values for" 'Parch' column.
+Therefore, the generated encoding columns are less than what is possible in the testing dataset.
+
+The current solution involves pruning that additional column.
+We think that there are better ways of doing but we haven't even started looking at anything yet.
