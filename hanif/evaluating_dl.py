@@ -29,4 +29,4 @@ for train, test in k_fold.split(X, Y):
     scores = model.evaluate(X[test], Y[test], verbose=0)
     print("%s: %.2f%%" % (model.metrics_names[1], scores[1] * 100))
     cv_scores.append(scores[1] * 100)
-print("%.2f%% (+/- %.2f%%)" % (numpy.mean(cv_scores), numpy.std(cv_scores)))
+print(numpy.mean(cv_scores), "(+/- ", numpy.std(cv_scores), ")")
