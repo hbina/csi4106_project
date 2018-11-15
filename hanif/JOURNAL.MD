@@ -26,3 +26,12 @@ Therefore, the generated encoding columns are less than what is possible in the 
 
 The current solution involves pruning that additional column.
 We think that there are better ways of doing but we haven't even started looking at anything yet.
+
+# 14th November 2018 - Evening
+
+There appear to be a problem with the network...
+Occasionally, it will contain weights that are completely zero, causing the outputs to be all zeros
+Not sure what to make of this.
+Perhaps its because of the pruning of additional encoding bit?
+
+Also added Tensorboard support...
