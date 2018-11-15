@@ -3,3 +3,5 @@ pandas
 tensorflow
 keras
 scikit-learn
+kaggle
+sklearn
