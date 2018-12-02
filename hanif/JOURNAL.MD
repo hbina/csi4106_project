@@ -35,3 +35,7 @@ Not sure what to make of this.
 Perhaps its because of the pruning of additional encoding bit?
 
 Also added Tensorboard support...
+
+# 2nd December 2018
+
+Really...what else can I do....lel
