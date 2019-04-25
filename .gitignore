@@ -3,3 +3,4 @@ venv/
 .idea/
 .~lock.train.csv#
 hanif/logs
+src/logs

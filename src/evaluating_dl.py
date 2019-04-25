@@ -8,10 +8,10 @@ from sklearn.model_selection import StratifiedKFold
 seed = 7
 numpy.random.seed(seed)
 # load pima indians dataset
-dataset = numpy.loadtxt("pima-indians-diabetes.csv", delimiter=",")
+data_set = numpy.loadtxt("pima-indians-diabetes.csv", delimiter=",")
 # split into input (X) and output (Y) variables
-X = dataset[:, 0:8]
-Y = dataset[:, 8]
+X = data_set[:, 0:8]
+Y = data_set[:, 8]
 # define 10-fold cross validation test harness
 k_fold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
 cv_scores = []

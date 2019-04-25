@@ -2,7 +2,7 @@ import keras as ks
 import numpy as np
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 import sklearn
-from keras import Sequential
+from keras.models import Sequential
 from keras.layers import Dense
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import StratifiedKFold
@@ -54,7 +54,7 @@ for train, test in k_fold.split(x_train_preprocessed, Y_train):
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     # Fit the model
     tbCallBack = ks.callbacks.TensorBoard(log_dir='logs', histogram_freq=0,
-                             write_graph=True, write_images=True)
+                                          write_graph=True, write_images=True)
     model.fit(x_train_preprocessed[train], Y_train[train], epochs=100, verbose=1, callbacks=[tbCallBack])
     # evaluate the model
     scores = model.evaluate(x_train_preprocessed[test], Y_train[test], verbose=1)
